@@ -221,10 +221,33 @@ prompt_dir() {
 }
 
 # Virtualenv: current working virtualenv
+# prompt_virtualenv() {
+#   if [[ -n "$VIRTUAL_ENV" && -n "$VIRTUAL_ENV_DISABLE_PROMPT" ]]; then
+#     VIRTUAL_ENV_VERSION=$(${VIRTUAL_ENV}/bin/python -V)
+#     # prompt_segment blue black "(${VIRTUAL_ENV:t:gs/%/%%})"
+#     prompt_segment yellow black "${VIRTUAL_ENV_VERSION}"
+#   fi
+# }
+
 prompt_virtualenv() {
+  local env='';
+
   if [[ -n "$VIRTUAL_ENV" && -n "$VIRTUAL_ENV_DISABLE_PROMPT" ]]; then
-    prompt_segment yellow black "`python -V`"
+    # VIRTUAL_ENV_VERSION=$(${VIRTUAL_ENV}/bin/python -V)
+    # prompt_segment cyan white "${VIRTUAL_ENV:t}"
+    env="$VIRTUAL_ENV"
+  elif [[ -n "$CONDA_DEFAULT_ENV" ]]; then
+    # if "$CONDA_DEFAULT_ENV" variable exists,
+    # then you are using conda to manage python virtual env
+    env="$CONDA_DEFAULT_ENV"
   fi
+
+  if [[ -n $env ]]; then
+    color=cyan
+    prompt_segment $color $PRIMARY_FG
+    print -Pn " $(basename $env) "
+  fi
+
 }
 
 # Status:

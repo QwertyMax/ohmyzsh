@@ -5,3 +5,8 @@ function virtualenv_prompt_info(){
 
 # disables prompt mangling in virtual_env/bin/activate
 export VIRTUAL_ENV_DISABLE_PROMPT=1
+
+# Disable conda prompt changes
+# https://conda.io/docs/user-guide/configuration/use-condarc.html#change-command-prompt-changeps1
+# changeps1: False
+conda config --set changeps1 false &>/dev/null
